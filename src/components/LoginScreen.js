@@ -1,52 +1,3 @@
-// import { useState } from "react";
-// import { Button, Form, Input, Alert } from "antd";
-// import axios from "axios";
-// const URL_AUTH = "/api/auth/local";
-// export default function LoginScreen(props) {
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [errMsg, setErrMsg] = useState(null);
-//   const handleLogin = async (formData) => {
-//     try {
-//       setIsLoading(true);
-//       setErrMsg(null);
-//       const response = await axios.post(URL_AUTH, { ...formData });
-//       const token = response.data.jwt;
-//       axios.defaults.headers.common = { Authorization: `bearer ${token}` };
-//       props.onLoginSuccess();
-//     } catch (err) {
-//       console.log(err);
-//       setErrMsg("Invalid username or password."); //err.message);
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   return (
-//     <Form onFinish={handleLogin} autoComplete="off">
-//       {errMsg && (
-//         <Form.Item>
-//           <Alert message={errMsg} type="error" />
-//         </Form.Item>
-//       )}
-//       <Form.Item
-//         label="Username"
-//         name="identifier"
-//         rules={[{ required: true }]}
-//       >
-//         <Input />
-//       </Form.Item>
-
-//       <Form.Item label="Password" name="password" rules={[{ required: true }]}>
-//         <Input.Password />
-//       </Form.Item>
-//       <Form.Item>
-//         <Button type="primary" htmlType="submit" loading={isLoading}>
-//           Submit
-//         </Button>
-//       </Form.Item>
-//     </Form>
-//   );
-// }
 import React, { useState, useEffect } from "react";
 import {
   Button,
@@ -61,6 +12,8 @@ import {
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+
 const { Text, Title, Link } = Typography;
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
@@ -69,19 +22,22 @@ const URL_AUTH = "/api/auth/local";
 export default function LoginScreen(props) {
   const [isLoading, setIsLoading] = useState(false);
   const [errMsg, setErrMsg] = useState(null);
-
+  const navigate = useNavigate();
   const { token } = useToken();
   const screens = useBreakpoint();
+  const [remember, setRemember] = useState(false);
 
-  // useEffect(() => {
-  //   // ตรวจสอบโทเค็นที่บันทึกไว้
-  //   const savedToken =
-  //     localStorage.getItem("token") || sessionStorage.getItem("token");
-  //   if (savedToken) {
-  //     axios.defaults.headers.common = { Authorization: `Bearer ${savedToken}` };
-  //     props.onLoginSuccess(); // เปลี่ยนไปหน้าหลักทันที
-  //   }
-  // }, [props]);
+  useEffect(() => {
+    // ตรวจสอบ token ที่บันทึกไว้ใน localStorage หรือ sessionStorage
+    const savedToken =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (savedToken) {
+      // ถ้ามี token ก็ควรจะเปลี่ยนเส้นทางไปหน้า Finance เลย
+      axios.defaults.headers.common = { Authorization: `Bearer ${savedToken}` };
+      props.onLoginSuccess();
+      navigate("/finance");
+    }
+  }, [props, navigate]);
 
   const handleLogin = async (formData) => {
     try {
@@ -90,13 +46,14 @@ export default function LoginScreen(props) {
       const response = await axios.post(URL_AUTH, { ...formData });
       const token = response.data.jwt;
 
-      if (formData.remember) {
+      if (remember) {
         localStorage.setItem("token", token); // จดจำถาวร
       } else {
         sessionStorage.setItem("token", token); // จดจำเฉพาะ session
       }
       axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
       props.onLoginSuccess();
+      navigate("/finance");
     } catch (err) {
       console.log(err);
       setErrMsg("Invalid username or password.");
@@ -175,18 +132,23 @@ export default function LoginScreen(props) {
           >
             <Input.Password prefix={<LockOutlined />} placeholder="Password" />
           </Form.Item>
-          {/* <Form.Item>
-            <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
-            </Form.Item>
-            <a style={styles.forgotPassword} href="">
-              Forgot password?
-            </a>
-          </Form.Item> */}
+          <Form.Item>
+            <Checkbox
+              checked={remember}
+              onChange={(e) => setRemember(e.target.checked)} // อัปเดตสถานะ remember
+            >
+              Remember me
+            </Checkbox>
+          </Form.Item>
           <Form.Item style={{ marginBottom: "0px" }}>
             <Button block type="primary" htmlType="submit" loading={isLoading}>
               Log in
             </Button>
+            {/* <Form.Item>
+              <a style={styles.forgotPassword} href="">
+                Forgot password?
+              </a>
+            </Form.Item> */}
             {/* <div style={styles.footer}>
               <Text style={styles.text}>Don't have an account?</Text>{" "}
               <Link href="">Sign up now</Link>
