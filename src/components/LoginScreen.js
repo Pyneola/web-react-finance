@@ -35,9 +35,23 @@ export default function LoginScreen(props) {
       // ถ้ามี token ก็ควรจะเปลี่ยนเส้นทางไปหน้า Finance เลย
       axios.defaults.headers.common = { Authorization: `Bearer ${savedToken}` };
       props.onLoginSuccess();
-      navigate("/finance");
+      navigate("/home");
     }
   }, [props, navigate]);
+
+  // useEffect(() => {
+  //   // หากมี token อยู่ใน localStorage หรือ sessionStorage แล้ว
+  //   const savedToken =
+  //     localStorage.getItem("token") || sessionStorage.getItem("token");
+
+  //   // ถ้ามี token แล้ว ไปหน้า home หรือหน้าเดิม
+  //   if (savedToken) {
+  //     axios.defaults.headers.common = { Authorization: `Bearer ${savedToken}` };
+  //     props.onLoginSuccess(); // เรียกใช้ props จาก App.js
+  //     const lastPath = sessionStorage.getItem("lastPath") || "/home"; // เก็บ lastPath เพื่อนำทาง
+  //     navigate(lastPath); // นำทางไปหน้าที่เก็บไว้
+  //   }
+  // }, [props, navigate]); // ตรวจสอบแค่ตอน mount ของ component
 
   const handleLogin = async (formData) => {
     try {
@@ -53,7 +67,7 @@ export default function LoginScreen(props) {
       }
       axios.defaults.headers.common = { Authorization: `Bearer ${token}` };
       props.onLoginSuccess();
-      navigate("/finance");
+      navigate("/home");
     } catch (err) {
       console.log(err);
       setErrMsg("Invalid username or password.");

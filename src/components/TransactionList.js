@@ -111,6 +111,12 @@ export default function TransactionList(props) {
         dataSource={props.data}
         rowKey="id"
         pagination={false}
+        style={{
+          border: "2px solid #ddd", // ขอบของตาราง
+          borderRadius: "8px", // มุมโค้งของขอบ
+          overflow: "hidden", // ป้องกันการแสดงผลลัพธ์เกินขอบ
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        }}
       />
       {isModalOpen && (
         <EditItem

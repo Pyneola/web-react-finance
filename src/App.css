@@ -34,3 +34,8 @@
     transform: rotate(360deg);
   }
 }
+
+.finance-container {
+  border-bottom: 3px solid #3333; /* ขอบด้านล่างสี #3333 */
+  box-shadow: 0px -3px 0px #fff; /* ขอบด้านล่างสี #fff */
+}
