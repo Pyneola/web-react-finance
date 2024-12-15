@@ -126,15 +126,15 @@
 
 // export default FinanceScreen;
 
-import "./App.css";
-import TransactionList from "./components/TransactionList";
+import "../App.css";
+import TransactionList from "./TransactionList";
 import { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import { Divider } from "antd";
-import AddItem from "./components/AddItem";
+import AddItem from "./AddItem";
 import { Spin, Typography, Modal } from "antd";
 import axios from "axios";
-import EditItem from "./components/EditItem"; // เพิ่ม EditItem เข้ามา
+import EditItem from "./EditItem"; // เพิ่ม EditItem เข้ามา
 
 const URL_TXACTIONS = "/api/txactions";
 

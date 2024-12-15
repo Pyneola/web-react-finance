@@ -90,7 +90,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useState } from "react"; // เพิ่ม useState
 import EditItem from "./EditItem"; // เพิ่มการนำเข้า EditItem
-import { handleLogout } from "../logoutFunction"; // นำเข้า handleLogout
+import { handleLogout } from "./logoutFunction"; // นำเข้า handleLogout
 
 export default function TransactionList(props) {
   const [isModalOpen, setIsModalOpen] = useState(false); // เพิ่มสถานะ modal

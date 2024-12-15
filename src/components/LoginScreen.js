@@ -73,15 +73,15 @@ export default function LoginScreen(props) {
   const { token } = useToken();
   const screens = useBreakpoint();
 
-  useEffect(() => {
-    // ตรวจสอบโทเค็นที่บันทึกไว้
-    const savedToken =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (savedToken) {
-      axios.defaults.headers.common = { Authorization: `Bearer ${savedToken}` };
-      props.onLoginSuccess(); // เปลี่ยนไปหน้าหลักทันที
-    }
-  }, [props]);
+  // useEffect(() => {
+  //   // ตรวจสอบโทเค็นที่บันทึกไว้
+  //   const savedToken =
+  //     localStorage.getItem("token") || sessionStorage.getItem("token");
+  //   if (savedToken) {
+  //     axios.defaults.headers.common = { Authorization: `Bearer ${savedToken}` };
+  //     props.onLoginSuccess(); // เปลี่ยนไปหน้าหลักทันที
+  //   }
+  // }, [props]);
 
   const handleLogin = async (formData) => {
     try {
@@ -175,22 +175,22 @@ export default function LoginScreen(props) {
           >
             <Input.Password prefix={<LockOutlined />} placeholder="Password" />
           </Form.Item>
-          <Form.Item>
+          {/* <Form.Item>
             <Form.Item name="remember" valuePropName="checked" noStyle>
               <Checkbox>Remember me</Checkbox>
             </Form.Item>
             <a style={styles.forgotPassword} href="">
               Forgot password?
             </a>
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item style={{ marginBottom: "0px" }}>
             <Button block type="primary" htmlType="submit" loading={isLoading}>
               Log in
             </Button>
-            <div style={styles.footer}>
+            {/* <div style={styles.footer}>
               <Text style={styles.text}>Don't have an account?</Text>{" "}
               <Link href="">Sign up now</Link>
-            </div>
+            </div> */}
           </Form.Item>
         </Form>
       </div>
