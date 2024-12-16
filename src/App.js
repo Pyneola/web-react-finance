@@ -68,9 +68,10 @@ import {
   Navigate,
   useLocation,
 } from "react-router-dom";
-import LoginScreen from "./components/LoginScreen";
-import FinanceScreen from "./components/FinanceScreen";
-import HomeScreen from "./components/HomeScreen";
+import LoginScreen from "./pages/LoginScreen";
+import FinanceScreen from "./pages/FinanceScreen";
+import HomeScreen from "./pages/HomeScreen";
+import ProfileScreen from "./pages/ProfileScreen";
 import Sidebar from "./SlideBar";
 import { useState, useEffect } from "react";
 
@@ -103,7 +104,10 @@ function App() {
   return (
     <div className="App">
       {/* ตรวจสอบว่าไม่อยู่ในหน้า login จึงจะแสดง Sidebar */}
-      {location.pathname !== "/login" && <Sidebar />}
+      {/* {location.pathname !== "/login" && <Sidebar />} */}
+      {(location.pathname === "/home" ||
+        location.pathname === "/finance" ||
+        location.pathname === "/profile") && <Sidebar />}
 
       <header className="App-header">
         <Routes>
@@ -125,6 +129,12 @@ function App() {
           <Route
             path="/login"
             element={<LoginScreen onLoginSuccess={handleLoginSuccess} />}
+          />
+          <Route
+            path="/profile"
+            element={
+              isAuthenticated ? <ProfileScreen /> : <Navigate to="/login" />
+            }
           />
           {/* Path เริ่มต้นของแอป */}
           <Route

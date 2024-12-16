@@ -8,6 +8,7 @@ const LogoutButton = () => {
   const handleLogout = () => {
     // ลบ token จาก localStorage และ sessionStorage
     localStorage.removeItem("token");
+    document.cookie = "token=; path=/; max-age=0;";
     sessionStorage.removeItem("token");
 
     // ลบ Authorization header ของ axios

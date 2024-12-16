@@ -180,14 +180,14 @@
 // export default FinanceScreen;
 
 import "../App.css";
-import TransactionList from "./TransactionList";
+import TransactionList from "../components/TransactionList";
 import { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import { Divider } from "antd";
-import AddItem from "./AddItem";
-import { Spin, Typography, Modal } from "antd";
+import AddItem from "../components/AddItem";
+import { Spin, Typography, Modal, Card } from "antd";
 import axios from "axios";
-import EditItem from "./EditItem";
+import EditItem from "../components/EditItem";
 import { Color } from "antd/es/color-picker";
 
 const URL_TXACTIONS = "/api/txactions";
@@ -320,22 +320,36 @@ function FinanceScreen() {
               padding: "15px",
               borderRadius: "8px",
               textAlign: "center",
+              fontSize: "30px",
             }}
           >
             จำนวนเงินปัจจุบัน {summaryAmount} บาท
           </Typography.Title>
 
           <AddItem onItemAdded={handleAddItem} />
-          <Divider
+
+          {/* เพิ่มขอบบนและล่างให้ติดกับขอบเว็บ */}
+          <Card
             style={{
-              border: "1px solid #000",
-              padding: "10px",
-              borderRadius: "5px",
               textAlign: "center",
+              backgroundColor: "#fff",
+              borderRadius: "8px",
+              padding: "15px",
+              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)", // เพิ่มเงาให้สวยขึ้น
+              marginTop: "5px", // ขอบบน
+              marginBottom: "10px", // ขอบล่าง
+              height: "60px",
+              display: "flex", // ใช้ flexbox เพื่อจัดตำแหน่ง
+              justifyContent: "center", // จัดตำแหน่งให้อยู่ตรงกลางแนวนอน
+              alignItems: "center", // จัดตำแหน่งให้อยู่ตรงกลางแนวตั้ง
             }}
           >
-            บันทึก รายรับ - รายจ่าย
-          </Divider>
+            <span
+              style={{ color: "#333", fontWeight: "bold", fontSize: "22px" }}
+            >
+              บันทึก รายรับ - รายจ่าย
+            </span>
+          </Card>
 
           <TransactionList
             data={transactionData}

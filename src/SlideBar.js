@@ -5,6 +5,7 @@ import {
   GlobalOutlined,
   MenuOutlined,
   CloseOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -54,7 +55,7 @@ function Sidebar() {
       {/* Sidebar */}
       {!collapsed && (
         <Sider
-          width={250}
+          width={220}
           className="site-layout-background"
           style={{
             height: "100vh",
@@ -65,8 +66,11 @@ function Sidebar() {
             backgroundColor: "#ffffff",
             boxShadow: "2px 0 8px rgba(0, 0, 0, 0.1)",
             zIndex: 999,
+            display: "flex",
+            flexDirection: "column", // วางเมนูในแนวตั้ง
+            justifyContent: "center", // จัดตำแหน่งเมนูให้อยู่ตรงกลางแนวตั้ง
             padding: "16px 16px 0", // เพิ่ม padding ให้กับ Sider
-            transition: "all 0.3s ease-in-out", // เพิ่ม transition ให้ Sidebar เคลื่อนไหวอย่างนุ่มนวล
+            transition: "all 0.01s ease-in-out", // เพิ่ม transition ให้ Sidebar เคลื่อนไหวอย่างนุ่มนวล
             boxSizing: "border-box", // ใช้ boxSizing เพื่อลดปัญหาการหักล้าง padding
           }}
         >
@@ -76,7 +80,11 @@ function Sidebar() {
             style={{
               border: "none",
               padding: "0", // กำหนด padding เป็น 0 เพื่อให้ทุกอย่างแนบสนิท
-              height: "auto", // ใช้ height: auto เพื่อให้เมนูมีความสูงตามเนื้อหาภายใน
+              flex: "1", // ใช้ flex: 1 เพื่อให้เมนูขยายเต็มพื้นที่ใน Sider
+              display: "flex", // ใช้ flexbox ภายในเมนู
+              flexDirection: "column", // วางรายการในแนวตั้ง
+              justifyContent: "center", // จัดตำแหน่งรายการเมนูให้อยู่ตรงกลาง
+              alignItems: "center", // จัดตำแหน่งรายการเมนูให้อยู่ตรงกลาง
             }}
           >
             <Menu.Item
@@ -112,6 +120,23 @@ function Sidebar() {
               }}
             >
               Finance
+            </Menu.Item>
+            <Menu.Item
+              key="3"
+              icon={<UserOutlined />}
+              onClick={() => navigate("/profile")}
+              style={{
+                borderRadius: "8px",
+                margin: "8px 16px", // เพิ่ม margin ให้แต่ละรายการห่างกัน
+                padding: "12px", // เพิ่ม padding ให้แต่ละรายการ
+                backgroundColor: "#f5f5f5",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                transition: "all 0.2s ease-in-out",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              Profile
             </Menu.Item>
           </Menu>
 

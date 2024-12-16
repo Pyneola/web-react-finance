@@ -12,7 +12,7 @@ import {
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const { Text, Title, Link } = Typography;
 const { useToken } = theme;

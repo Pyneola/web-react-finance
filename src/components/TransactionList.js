@@ -3,7 +3,6 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { useState } from "react"; // เพิ่ม useState
 import EditItem from "./EditItem"; // เพิ่มการนำเข้า EditItem
-import LogoutButton from "./logoutFunction";
 
 export default function TransactionList(props) {
   const [isModalOpen, setIsModalOpen] = useState(false); // เพิ่มสถานะ modal
@@ -126,11 +125,6 @@ export default function TransactionList(props) {
           onItemEdited={handleItemEdited} // ส่งฟังก์ชันจัดการการแก้ไขไปยัง modal
         />
       )}
-      {/* ปุ่ม Logout */}
-      <div>
-        {/* ปุ่ม Logout */}
-        <LogoutButton />
-      </div>
     </>
   );
 }
