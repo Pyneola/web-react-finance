@@ -115,6 +115,7 @@ export default function TransactionList(props) {
           borderRadius: "8px", // มุมโค้งของขอบ
           overflow: "hidden", // ป้องกันการแสดงผลลัพธ์เกินขอบ
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "#e4e4e4",
         }}
       />
       {isModalOpen && (

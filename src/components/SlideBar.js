@@ -63,7 +63,7 @@ function Sidebar() {
             left: "0",
             top: "0",
             borderRight: "2px solid #ccc",
-            backgroundColor: "#ffffff",
+            backgroundColor: "#333",
             boxShadow: "2px 0 8px rgba(0, 0, 0, 0.1)",
             zIndex: 999,
             display: "flex",
@@ -85,6 +85,8 @@ function Sidebar() {
               flexDirection: "column", // วางรายการในแนวตั้ง
               justifyContent: "center", // จัดตำแหน่งรายการเมนูให้อยู่ตรงกลาง
               alignItems: "center", // จัดตำแหน่งรายการเมนูให้อยู่ตรงกลาง
+              backgroundColor: "#333",
+              boxShadow: "10px 0 8px rgba(72, 72, 72, 0.1)",
             }}
           >
             <Menu.Item
@@ -100,6 +102,7 @@ function Sidebar() {
                 transition: "all 0.2s ease-in-out",
                 display: "flex",
                 alignItems: "center",
+                backgroundColor: "#e4e4e4",
               }}
             >
               Home
@@ -117,6 +120,7 @@ function Sidebar() {
                 transition: "all 0.2s ease-in-out",
                 display: "flex",
                 alignItems: "center",
+                backgroundColor: "#e4e4e4",
               }}
             >
               Finance
@@ -134,6 +138,7 @@ function Sidebar() {
                 transition: "all 0.2s ease-in-out",
                 display: "flex",
                 alignItems: "center",
+                backgroundColor: "#e4e4e4",
               }}
             >
               Profile

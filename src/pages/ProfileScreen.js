@@ -7,7 +7,7 @@ import { UserOutlined } from "@ant-design/icons";
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        setLoading(true);
         const token =
           localStorage.getItem("token") || sessionStorage.getItem("token");
 

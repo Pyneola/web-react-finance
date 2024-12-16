@@ -72,7 +72,7 @@ import LoginScreen from "./pages/LoginScreen";
 import FinanceScreen from "./pages/FinanceScreen";
 import HomeScreen from "./pages/HomeScreen";
 import ProfileScreen from "./pages/ProfileScreen";
-import Sidebar from "./SlideBar";
+import Sidebar from "./components/SlideBar";
 import { useState, useEffect } from "react";
 
 axios.defaults.baseURL =

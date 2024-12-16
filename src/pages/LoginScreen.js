@@ -99,7 +99,8 @@ export default function LoginScreen(props) {
       alignItems: "center",
       backgroundColor: token.colorBgContainer,
       display: "flex",
-      height: screens.sm ? "100vh" : "auto",
+      height: screens.sm ? "100%" : "auto",
+      width: screens.sm ? "100%" : "auto",
       padding: screens.md ? `${token.sizeXXL}px 0px` : "0px",
     },
     text: {

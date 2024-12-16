@@ -304,8 +304,8 @@ function FinanceScreen() {
       className="finance-container"
       style={{
         padding: "25px",
-        backgroundColor: "#f7f7f7",
-        minHeight: "100vh",
+        backgroundColor: "#e4e4e4",
+        //height: "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
