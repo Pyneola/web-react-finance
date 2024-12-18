@@ -72,6 +72,7 @@ import LoginScreen from "./pages/LoginScreen";
 import FinanceScreen from "./pages/FinanceScreen";
 import HomeScreen from "./pages/HomeScreen";
 import ProfileScreen from "./pages/ProfileScreen";
+import ChartScreen from "./pages/ChartScreen";
 import Sidebar from "./components/SlideBar";
 import { useState, useEffect } from "react";
 
@@ -107,6 +108,7 @@ function App() {
       {/* {location.pathname !== "/login" && <Sidebar />} */}
       {(location.pathname === "/home" ||
         location.pathname === "/finance" ||
+        location.pathname === "/chart" ||
         location.pathname === "/profile") && <Sidebar />}
 
       <header className="App-header">
@@ -134,6 +136,12 @@ function App() {
             path="/profile"
             element={
               isAuthenticated ? <ProfileScreen /> : <Navigate to="/login" />
+            }
+          />
+          <Route
+            path="/chart"
+            element={
+              isAuthenticated ? <ChartScreen /> : <Navigate to="/chart" />
             }
           />
           {/* Path เริ่มต้นของแอป */}

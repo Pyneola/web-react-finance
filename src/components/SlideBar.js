@@ -6,6 +6,7 @@ import {
   MenuOutlined,
   CloseOutlined,
   UserOutlined,
+  BarChartOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -127,6 +128,24 @@ function Sidebar() {
             </Menu.Item>
             <Menu.Item
               key="3"
+              icon={<BarChartOutlined />}
+              onClick={() => navigate("/chart")}
+              style={{
+                borderRadius: "8px",
+                margin: "8px 16px", // เพิ่ม margin ให้แต่ละรายการห่างกัน
+                padding: "12px", // เพิ่ม padding ให้แต่ละรายการ
+                backgroundColor: "#f5f5f5",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                transition: "all 0.2s ease-in-out",
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#e4e4e4",
+              }}
+            >
+              Chart
+            </Menu.Item>
+            <Menu.Item
+              key="4"
               icon={<UserOutlined />}
               onClick={() => navigate("/profile")}
               style={{

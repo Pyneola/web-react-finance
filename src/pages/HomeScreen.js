@@ -12,9 +12,19 @@
 // export default HomeScreen;
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 
 function HomeScreen() {
   const navigate = useNavigate(); // ใช้สำหรับการนำทาง
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // เช็คว่าไม่มี token ใน localStorage หรือ sessionStorage
+    if (!localStorage.getItem("token") && !sessionStorage.getItem("token")) {
+      setError("กรุณาเข้าสู่ระบบเพื่อเข้าถึงข้อมูล");
+      navigate("/login"); // เมื่อไม่มี token จะนำไปที่หน้า login
+    }
+  }, [navigate]); // การเพิ่ม `navigate` ใน dependencies
 
   return (
     <div

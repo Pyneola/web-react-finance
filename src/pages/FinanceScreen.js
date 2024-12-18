@@ -200,6 +200,15 @@ function FinanceScreen() {
   const [editingItem, setEditingItem] = useState(null);
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // เช็คว่าไม่มี token ใน localStorage หรือ sessionStorage
+    if (!localStorage.getItem("token") && !sessionStorage.getItem("token")) {
+      setError("กรุณาเข้าสู่ระบบเพื่อเข้าถึงข้อมูล");
+      navigate("/login"); // เมื่อไม่มี token จะนำไปที่หน้า login
+    }
+  }, [navigate]); // การเพิ่ม `navigate` ใน dependencies
 
   const fetchItems = async () => {
     try {
