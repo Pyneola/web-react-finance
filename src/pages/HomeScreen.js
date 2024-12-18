@@ -1,15 +1,3 @@
-// import React from "react";
-
-// function HomeScreen() {
-//   return (
-//     <div>
-//       <h1>Welcome to the Home Page</h1>
-//       <p>This is the home page that appears after logging in.</p>
-//     </div>
-//   );
-// }
-
-// export default HomeScreen;
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";

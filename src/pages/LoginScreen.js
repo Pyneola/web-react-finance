@@ -39,20 +39,6 @@ export default function LoginScreen(props) {
     }
   }, [props, navigate]);
 
-  // useEffect(() => {
-  //   // หากมี token อยู่ใน localStorage หรือ sessionStorage แล้ว
-  //   const savedToken =
-  //     localStorage.getItem("token") || sessionStorage.getItem("token");
-
-  //   // ถ้ามี token แล้ว ไปหน้า home หรือหน้าเดิม
-  //   if (savedToken) {
-  //     axios.defaults.headers.common = { Authorization: `Bearer ${savedToken}` };
-  //     props.onLoginSuccess(); // เรียกใช้ props จาก App.js
-  //     const lastPath = sessionStorage.getItem("lastPath") || "/home"; // เก็บ lastPath เพื่อนำทาง
-  //     navigate(lastPath); // นำทางไปหน้าที่เก็บไว้
-  //   }
-  // }, [props, navigate]); // ตรวจสอบแค่ตอน mount ของ component
-
   const handleLogin = async (formData) => {
     try {
       setIsLoading(true);
@@ -159,15 +145,6 @@ export default function LoginScreen(props) {
             <Button block type="primary" htmlType="submit" loading={isLoading}>
               Log in
             </Button>
-            {/* <Form.Item>
-              <a style={styles.forgotPassword} href="">
-                Forgot password?
-              </a>
-            </Form.Item> */}
-            {/* <div style={styles.footer}>
-              <Text style={styles.text}>Don't have an account?</Text>{" "}
-              <Link href="">Sign up now</Link>
-            </div> */}
           </Form.Item>
         </Form>
       </div>
