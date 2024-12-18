@@ -19,7 +19,7 @@ export default function AddItem(props) {
         />
       </Form.Item>
       <Form.Item name="amount" label="จํานวนเงิน" rules={[{ required: true }]}>
-        <InputNumber placeholder="จํานวนเงิน" />
+        <InputNumber placeholder="จํานวนเงิน" min={0} />
       </Form.Item>
       <Form.Item name="note" label="หมายเหตุ" rules={[{ required: true }]}>
         <Input placeholder="Note" />

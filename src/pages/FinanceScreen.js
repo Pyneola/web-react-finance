@@ -185,10 +185,11 @@ import { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
 import { Divider } from "antd";
 import AddItem from "../components/AddItem";
-import { Spin, Typography, Modal, Card } from "antd";
+import { Spin, Typography, Modal, Card, message } from "antd";
 import axios from "axios";
 import EditItem from "../components/EditItem";
 import { Color } from "antd/es/color-picker";
+import { useNavigate } from "react-router-dom";
 
 const URL_TXACTIONS = "/api/txactions";
 
@@ -198,6 +199,7 @@ function FinanceScreen() {
   const [transactionData, setTransactionData] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
 
   const fetchItems = async () => {
     try {
@@ -216,6 +218,10 @@ function FinanceScreen() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   const handleAddItem = async (item) => {
     try {
@@ -259,19 +265,54 @@ function FinanceScreen() {
     setEditingItem(item);
   };
 
+  // const updateItem = async (updatedItem) => {
+  //   try {
+  //     await axios.put(`${URL_TXACTIONS}/${updatedItem.id}`, {
+  //       data: updatedItem,
+  //     });
+  //     setTransactionData((prevData) =>
+  //       prevData.map((item) =>
+  //         item.id === updatedItem.id ? updatedItem : item
+  //       )
+  //     );
+  //     setEditingItem(null);
+  //   } catch (error) {
+  //     console.error("Failed to update item:", error);
+  //   }
+  // };
+
+  // const updateItem = async (updatedItem) => {
+  //   try {
+  //     const response = await axios.put(`${URL_TXACTIONS}/${updatedItem.id}`, {
+  //       data: updatedItem,
+  //     });
+  //     const { id, attributes } = response.data.data;
+  //     setTransactionData((prevData) =>
+  //       prevData.map((item) =>
+  //         item.id === id ? { id, key: id, ...attributes } : item
+  //       )
+  //     );
+  //   } catch (err) {
+  //     console.error("Error updating item:", err);
+  //   }
+  // };
   const updateItem = async (updatedItem) => {
     try {
-      await axios.put(`${URL_TXACTIONS}/${updatedItem.id}`, {
+      const response = await axios.put(`${URL_TXACTIONS}/${updatedItem.id}`, {
         data: updatedItem,
       });
-      setTransactionData((prevData) =>
-        prevData.map((item) =>
-          item.id === updatedItem.id ? updatedItem : item
-        )
-      );
-      setEditingItem(null);
-    } catch (error) {
-      console.error("Failed to update item:", error);
+
+      const { id, attributes } = response.data.data;
+
+      setTransactionData((prevData) => {
+        const newData = prevData.map((item) =>
+          item.id === id ? { id, key: id, ...attributes } : item
+        );
+        console.log("Updated Transaction Data:", newData);
+        return newData;
+      });
+    } catch (err) {
+      console.error("Error updating item:", err);
     }
   };
 
@@ -279,12 +320,9 @@ function FinanceScreen() {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
     if (!token) {
-      window.location.href = "/login";
+      //window.location.href = "/login";
+      navigate("/login");
     }
-  }, []);
-
-  useEffect(() => {
-    fetchItems();
   }, []);
 
   useEffect(() => {
@@ -355,14 +393,13 @@ function FinanceScreen() {
             data={transactionData}
             onNoteChanged={handleNoteChanged}
             onRowDeleted={handleRowDeleted}
-            onRowEdited={handleEdit}
+            onRowEdited={updateItem}
           />
-
           {editingItem && (
             <EditItem
               isOpen={editingItem !== null}
               item={editingItem}
-              onItemEdited={updateItem}
+              onItemEdited={updateItem} // ฟังก์ชันที่ใช้แก้ไข
               onClose={() => setEditingItem(null)}
             />
           )}
