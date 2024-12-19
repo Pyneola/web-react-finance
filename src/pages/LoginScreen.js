@@ -26,18 +26,32 @@ export default function LoginScreen(props) {
   const { token } = useToken();
   const screens = useBreakpoint();
   const [remember, setRemember] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    // ตรวจสอบ token ที่บันทึกไว้ใน localStorage หรือ sessionStorage
     const savedToken =
       localStorage.getItem("token") || sessionStorage.getItem("token");
+
     if (savedToken) {
-      // ถ้ามี token ก็ควรจะเปลี่ยนเส้นทางไปหน้า Finance เลย
+      // ตั้งค่า Authorization header
       axios.defaults.headers.common = { Authorization: `Bearer ${savedToken}` };
-      props.onLoginSuccess();
-      navigate("/home");
+
+      // ตรวจสอบเฉพาะเมื่ออยู่ที่หน้า /login
+      if (location.pathname === "/login") {
+        navigate(sessionStorage.getItem("lastPath") || "/home"); // กลับไป path ล่าสุดที่บันทึกไว้
+      }
+    } else {
+      // ไม่มี token ให้เปลี่ยนไปที่หน้า /login
+      if (location.pathname !== "/login") {
+        navigate("/login");
+      }
     }
-  }, [props, navigate]);
+
+    // บันทึก path ล่าสุด
+    if (savedToken && location.pathname !== "/login") {
+      sessionStorage.setItem("lastPath", location.pathname);
+    }
+  }, [location.pathname, navigate]);
 
   const handleLogin = async (formData) => {
     try {

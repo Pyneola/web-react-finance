@@ -1,4 +1,4 @@
-import { Button, Form, Select, Input, InputNumber, Modal } from "antd";
+import { Form, Select, Input, InputNumber, Modal } from "antd";
 import { useEffect } from "react";
 
 export default function EditItem(props) {

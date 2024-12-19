@@ -9,6 +9,7 @@ function HomeScreen() {
   useEffect(() => {
     // เช็คว่าไม่มี token ใน localStorage หรือ sessionStorage
     if (!localStorage.getItem("token") && !sessionStorage.getItem("token")) {
+      console.log("No token, navigating to /login"); // Debug
       setError("กรุณาเข้าสู่ระบบเพื่อเข้าถึงข้อมูล");
       navigate("/login"); // เมื่อไม่มี token จะนำไปที่หน้า login
     }

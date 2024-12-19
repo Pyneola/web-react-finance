@@ -11,7 +11,6 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 const URL_TXACTIONS = "/api/txactions";
-const URL_TXACTIONS_user = "/api/txactions";
 
 function FinanceScreen() {
   const [summaryAmount, setSummaryAmount] = useState(0);

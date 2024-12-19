@@ -11,44 +11,47 @@ import LoginScreen from "./pages/LoginScreen";
 import FinanceScreen from "./pages/FinanceScreen";
 import HomeScreen from "./pages/HomeScreen";
 import ProfileScreen from "./pages/ProfileScreen";
-import ChartScreen from "./pages/ChartScreen";
+import DashboardScreen from "./pages/DashboardScreen";
 import Sidebar from "./components/SlideBar";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.baseURL =
   process.env.REACT_APP_BASE_URL || "http://localhost:1337";
-
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const location = useLocation(); // ใช้ useLocation เพื่อตรวจสอบ path ปัจจุบัน
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLoginSuccess = () => {
-    setIsAuthenticated(true); // เมื่อล็อกอินสำเร็จ จะเปลี่ยนสถานะเป็น true
+    setIsAuthenticated(true);
+    // บันทึก path ล่าสุดหลังจากล็อกอินสำเร็จ
+    sessionStorage.setItem("lastPath", "/home");
+    navigate("/home");
   };
 
   useEffect(() => {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
-    if (token) {
-      setIsAuthenticated(true); // หากมี token อยู่แล้ว ให้ถือว่าเข้าสู่ระบบแล้ว
-    }
+    setIsAuthenticated(!!token); // ตรวจสอบ token และตั้งค่า authenticated
   }, []);
 
-  // ตรวจสอบให้แน่ใจว่า path ล่าสุดที่ผู้ใช้กำลังอยู่จะถูกเก็บใน sessionStorage
   useEffect(() => {
-    if (isAuthenticated) {
-      sessionStorage.setItem("lastPath", location.pathname);
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
+    if (!token && location.pathname !== "/login") {
+      // หากไม่มี token และ path ปัจจุบันไม่ใช่ /login
+      navigate("/login");
     }
-  }, [location, isAuthenticated]);
+  }, [location, navigate]);
 
   return (
     <div className="App">
-      {/* ตรวจสอบว่าไม่อยู่ในหน้า login จึงจะแสดง Sidebar */}
-      {/* {location.pathname !== "/login" && <Sidebar />} */}
-      {(location.pathname === "/home" ||
-        location.pathname === "/finance" ||
-        location.pathname === "/dashboard" ||
-        location.pathname === "/profile") && <Sidebar />}
+      {isAuthenticated &&
+        (location.pathname === "/home" ||
+          location.pathname === "/finance" ||
+          location.pathname === "/dashboard" ||
+          location.pathname === "/profile") && <Sidebar />}
 
       <header className="App-header">
         <Routes>
@@ -66,34 +69,34 @@ function App() {
               isAuthenticated ? <FinanceScreen /> : <Navigate to="/login" />
             }
           />
-          {/* Path สำหรับหน้า Login */}
-          <Route
-            path="/login"
-            element={<LoginScreen onLoginSuccess={handleLoginSuccess} />}
-          />
+          {/* Path สำหรับหน้า Profile */}
           <Route
             path="/profile"
             element={
               isAuthenticated ? <ProfileScreen /> : <Navigate to="/login" />
             }
           />
+          {/* Path สำหรับหน้า Dashboard */}
           <Route
             path="/dashboard"
             element={
-              isAuthenticated ? <ChartScreen /> : <Navigate to="/dashboard" />
+              isAuthenticated ? <DashboardScreen /> : <Navigate to="/login" />
             }
+          />
+          {/* Path สำหรับหน้า Login */}
+          <Route
+            path="/login"
+            element={<LoginScreen onLoginSuccess={handleLoginSuccess} />}
           />
           {/* Path เริ่มต้นของแอป */}
           <Route
             path="/"
             element={
-              <Navigate
-                to={
-                  isAuthenticated
-                    ? sessionStorage.getItem("lastPath") || "/home" // หากมี lastPath จะไปหน้าเดิม
-                    : "/login"
-                }
-              />
+              isAuthenticated ? (
+                <Navigate to={sessionStorage.getItem("lastPath") || "/home"} />
+              ) : (
+                <Navigate to="/login" />
+              )
             }
           />
         </Routes>
