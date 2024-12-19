@@ -119,6 +119,7 @@ export default function TransactionList(props) {
           overflow: "hidden",
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
           backgroundColor: "#e4e4e4",
+          width: "170vh",
         }}
       />
       {isModalOpen && (

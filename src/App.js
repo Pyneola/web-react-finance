@@ -47,7 +47,7 @@ function App() {
       {/* {location.pathname !== "/login" && <Sidebar />} */}
       {(location.pathname === "/home" ||
         location.pathname === "/finance" ||
-        location.pathname === "/chart" ||
+        location.pathname === "/dashboard" ||
         location.pathname === "/profile") && <Sidebar />}
 
       <header className="App-header">
@@ -78,9 +78,9 @@ function App() {
             }
           />
           <Route
-            path="/chart"
+            path="/dashboard"
             element={
-              isAuthenticated ? <ChartScreen /> : <Navigate to="/chart" />
+              isAuthenticated ? <ChartScreen /> : <Navigate to="/dashboard" />
             }
           />
           {/* Path เริ่มต้นของแอป */}

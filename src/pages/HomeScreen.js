@@ -87,23 +87,6 @@ function HomeScreen() {
             ด้วยระบบที่ออกแบบมาให้ใช้งานได้สะดวก
             สร้างนิสัยทางการเงินที่ดีวันนี้!
           </p>
-          <button
-            style={{
-              backgroundColor: "#333",
-              color: "#fff",
-              padding: "15px 30px",
-              borderRadius: "8px",
-              fontSize: "1.2rem",
-              border: "none",
-              cursor: "pointer",
-              transition: "all 0.3s ease",
-            }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#000")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#333")}
-            onClick={() => navigate("/finance")} // เพิ่มฟังก์ชันนำทาง
-          >
-            เริ่มต้นใช้งาน
-          </button>
         </div>
       </main>
 

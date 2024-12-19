@@ -129,7 +129,7 @@ function Sidebar() {
             <Menu.Item
               key="3"
               icon={<BarChartOutlined />}
-              onClick={() => navigate("/chart")}
+              onClick={() => navigate("/dashboard")}
               style={{
                 borderRadius: "8px",
                 margin: "8px 16px", // เพิ่ม margin ให้แต่ละรายการห่างกัน
@@ -142,7 +142,7 @@ function Sidebar() {
                 backgroundColor: "#e4e4e4",
               }}
             >
-              Chart
+              Dashboard
             </Menu.Item>
             <Menu.Item
               key="4"

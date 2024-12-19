@@ -2,24 +2,25 @@ import "../App.css";
 import TransactionList from "../components/TransactionList";
 import { useState, useEffect, useRef } from "react";
 import dayjs from "dayjs";
-import { Divider } from "antd";
-import AddItem from "../components/AddItem";
+import AddItem from "../components/Additem";
 import { Spin, Typography, Modal, Card, message } from "antd";
 import axios from "axios";
 import EditItem from "../components/EditItem";
+import { jwtDecode } from "jwt-decode";
 
 import { useNavigate } from "react-router-dom";
 
 const URL_TXACTIONS = "/api/txactions";
+const URL_TXACTIONS_user = "/api/txactions";
 
 function FinanceScreen() {
   const [summaryAmount, setSummaryAmount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [transactionData, setTransactionData] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
-  const [data, setData] = useState([]);
+
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const [setError] = useState(null);
 
   useEffect(() => {
     // เช็คว่าไม่มี token ใน localStorage หรือ sessionStorage
@@ -32,7 +33,12 @@ function FinanceScreen() {
   const fetchItems = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(URL_TXACTIONS);
+      const response = await axios.get(
+        `${URL_TXACTIONS}?filters[creator][id][$eq]=${
+          jwtDecode(sessionStorage.getItem("token")).id ||
+          jwtDecode(localStorage.getItem("token")).id
+        }`
+      );
       setTransactionData(
         response.data.data.map((row) => ({
           id: row.id,
@@ -54,7 +60,11 @@ function FinanceScreen() {
   const handleAddItem = async (item) => {
     try {
       setIsLoading(true);
-      const params = { ...item, action_datetime: dayjs() };
+      const savedToken =
+        localStorage.getItem("token") || sessionStorage.getItem("token");
+      const decodedToken = jwtDecode(savedToken); // ถอดรหัส JWT เพื่อดึง ID ผู้ใช้
+      const creator = decodedToken.id; // ใช้ `id` หรือ `username` ที่เหมาะสมจาก token
+      const params = { ...item, action_datetime: dayjs(), creator };
       const response = await axios.post(URL_TXACTIONS, { data: params });
       const { id, attributes } = response.data.data;
       setTransactionData([
@@ -129,6 +139,8 @@ function FinanceScreen() {
       )
     );
   }, [transactionData]);
+
+  // ใช้งาน fetchUserTransactions และตั้งค่า Transaction Data
 
   return (
     <div
