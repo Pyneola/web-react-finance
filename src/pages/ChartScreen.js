@@ -248,11 +248,13 @@ export default function ChartScreen() {
         return;
       }
 
+      const getToken = () => {
+        const localToken = localStorage.getItem("token");
+        const sessionToken = sessionStorage.getItem("token");
+        return localToken || sessionToken; // คืนค่า token จากที่เก็บที่ไม่เป็น null หรือ undefined
+      };
       const response = await axios.get(
-        `${URL}?filters[creator][id][$eq]=${
-          jwtDecode(sessionStorage.getItem("token")).id ||
-          jwtDecode(localStorage.getItem("token")).id
-        }`,
+        `${URL}?filters[creator][id][$eq]=${jwtDecode(getToken()).id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -348,7 +350,7 @@ export default function ChartScreen() {
           marginBottom: "20px", // เพิ่มช่องว่างใต้ชื่อกราฟ
         }}
       >
-        กราฟวงกลม รายรับ-รายจ่าย
+        กราฟ รายรับ-รายจ่าย
       </Typography.Title>
       <h3>ชื่อผู้ใช้: {username}</h3> {/* แสดงชื่อผู้ใช้ */}
       <div
@@ -378,7 +380,7 @@ export default function ChartScreen() {
                 plugins: {
                   legend: {
                     position: "top",
-                    display: false, // ไม่แสดง legend
+                    display: true, // ไม่แสดง legend
                   },
                   title: {
                     display: true,
@@ -399,7 +401,7 @@ export default function ChartScreen() {
             flex: 2,
           }}
         >
-          <div style={{ position: "relative", width: "60%", height: "350px" }}>
+          <div style={{ position: "relative", width: "65%", height: "350px" }}>
             <Bar
               data={chartData}
               options={{

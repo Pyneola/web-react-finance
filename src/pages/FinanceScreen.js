@@ -30,14 +30,17 @@ function FinanceScreen() {
     }
   }, [navigate]); // การเพิ่ม `navigate` ใน dependencies
 
+  const getToken = () => {
+    const localToken = localStorage.getItem("token");
+    const sessionToken = sessionStorage.getItem("token");
+    return localToken || sessionToken; // คืนค่า token จากที่เก็บที่ไม่เป็น null หรือ undefined
+  };
+
   const fetchItems = async () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${URL_TXACTIONS}?filters[creator][id][$eq]=${
-          jwtDecode(sessionStorage.getItem("token")).id ||
-          jwtDecode(localStorage.getItem("token")).id
-        }`
+        `${URL_TXACTIONS}?filters[creator][id][$eq]=${jwtDecode(getToken()).id}`
       );
       setTransactionData(
         response.data.data.map((row) => ({
