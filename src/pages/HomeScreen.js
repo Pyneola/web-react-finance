@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 
 function HomeScreen() {
   const navigate = useNavigate(); // ใช้สำหรับการนำทาง
-  const [error, setError] = useState(null);
+  const [setError] = useState(null);
 
   useEffect(() => {
     // เช็คว่าไม่มี token ใน localStorage หรือ sessionStorage

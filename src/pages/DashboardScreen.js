@@ -39,10 +39,8 @@ function DashboardScreen() {
   useEffect(() => {
     const token =
       localStorage.getItem("token") || sessionStorage.getItem("token");
-    console.log("Checking token:", token); // Debug
 
     if (!token) {
-      console.log("No token, navigating to /login"); // Debug
       setError("กรุณาเข้าสู่ระบบเพื่อเข้าถึงข้อมูล");
       navigate("/login", { replace: true }); // ใช้ replace เพื่อไม่ให้เพิ่มในประวัติการนำทาง
     }

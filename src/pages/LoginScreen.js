@@ -14,7 +14,7 @@ import axios from "axios";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-const { Text, Title, Link } = Typography;
+const { Text, Title } = Typography;
 const { useToken } = theme;
 const { useBreakpoint } = Grid;
 const URL_AUTH = "/api/auth/local";

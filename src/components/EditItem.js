@@ -40,17 +40,17 @@ export default function EditItem(props) {
   return (
     <Modal
       title="Edit Item"
-      visible={props.isOpen}
+      open={props.isOpen}
       onCancel={props.onClose}
       onOk={() => form.submit()} // ใช้ form.submit() เมื่อกด Save
       okText="Save"
       cancelText="Cancel"
     >
-      <Form form={form} layout="inline" onFinish={handleFormSubmit}>
+      <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
         <Form.Item name="type" label="ชนิด" rules={[{ required: true }]}>
           <Select
             allowClear
-            style={{ width: "150px", justifyContent: "space-between" }}
+            style={{ width: "100%", justifyContent: "space-between" }}
             options={[
               {
                 value: "income",
